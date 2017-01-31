@@ -1,0 +1,86 @@
+import Piano.qry
+
+hemisphere.left |= '*.left'
+hemisphere.right |= '*.right'
+
+######
+# CC
+######
+cing.side |= Cingulum_Ant.side or Cingulum_Post.side or Cingulum_Mid.side
+
+cc = (endpoints_in(Frontal.left) and endpoints_in(Frontal.right)) or (endpoints_in(Parietal.left) and endpoints_in(Parietal.right)) or (endpoints_in(Occipital.left) and endpoints_in(Occipital.right)) or (endpoints_in(cing.left) and endpoints_in(cing.right)) not in Deep_Nucleii.left not in Deep_Nucleii.right or (endpoints_in(Associative.left) and endpoints_in(Associative.right)) and Corpus_Callosum not in Olfactory_wm.left not in Olfactory_wm.right not in Olfactory.right not in Olfactory.left not in Limbic.left not in Limbic.right not in insula.left not in insula.right not in superior_of(HC.left) not in superior_of(HC.right)
+
+
+# 5 easy segments
+cc1 = (endpoints_in(Frontal_ctx.left) and endpoints_in(Frontal_ctx.right)) not in Deep_Nucleii.left not in Deep_Nucleii.right 
+cc2 = (endpoints_in(Associative_ctx.left) and endpoints_in(Associative_ctx.right)) or (Motor_ctx.left and Motor_ctx.right) not in Deep_Nucleii.left not in Deep_Nucleii.right not in cc1 
+cc3 = (Somatosensory_ctx.left and Somatosensory_ctx.right) not in Deep_Nucleii.left not in Deep_Nucleii.right 
+cc4 = (endpoints_in(Parietal_ctx.left) and endpoints_in(Parietal_ctx.right)) not in Deep_Nucleii.left not in Deep_Nucleii.right cc5 = (endpoints_in(Occipital_ctx.left) and endpoints_in(Occipital_ctx.right)) not in Deep_Nucleii.left not in Deep_Nucleii.right 
+
+
+######
+# CST 
+######
+cst_pre.side |= Brainstem and endpoints_in(Motor.side) 
+cst_post.side |= Brainstem and endpoints_in(Somatosensory.side) 
+cst.side = cst_pre.side or cst_post.side not in Cerebellum_both not in Frontal.side not in hemisphere.opposite not in Corpus_Callosum
+
+###########
+# Cingulum 
+###########
+Cg.side = endpoints_in(cing.side) not in hemisphere.opposite not in Thalamus.side not in Putamen.side not in HC.side not in Caudate.side not in Amygdala.side not in Lateral_Temporal_ctx.side not in Motor_ctx.side not in Sensorimotor_ctx.side not in Cerebellum_both not in Frontal_Mid_Orb.side not in Frontal_Sup_Orb.side not in Frontal_Inf_Orb.side not in superior_of(HC.side) not in medial_of(cing.side) not in Frontal_sup.side not in Frontal_mid.side not in Frontal_Inf_Tri.side not in Frontal_Inf_Oper.side 
+
+#################################
+# ASSOCIATIVE CORTEX connections
+#################################
+b01.side = endpoints_in(Associative.side) and endpoints_in(Caudate.side) not in hemisphere.opposite not in posterior_of(Caudate.side) not in Brainstem
+b02.side = endpoints_in(Associative.side) and endpoints_in(Putamen.side) not in hemisphere.opposite not in posterior_of(Putamen.side) not in Brainstem
+b03.side = endpoints_in(Associative.side) and endpoints_in(Thalamus.side) not in hemisphere.opposite not in posterior_of(Thalamus.side) not in Brainstem
+
+
+############################
+# LIMBIC CORTEX connections 
+############################
+b04.side = endpoints_in(Limbic.side) and endpoints_in(Caudate.side) not in hemisphere.opposite not in posterior_of(Caudate.side)
+b05.side = endpoints_in(Limbic.side) and endpoints_in(Putamen.side) not in hemisphere.opposite not in posterior_of(Putamen.side)
+b06.side = endpoints_in(Limbic.side) and endpoints_in(Thalamus.side) not in hemisphere.opposite not in posterior_of(Thalamus.side)
+
+##################################
+# SENSORIMOTOR CORTEX connections
+##################################
+b07.side = endpoints_in(Sensorimotor.side) and endpoints_in(Caudate.side) not in hemisphere.opposite not in posterior_of(HC.side) not in anterior_of(Caudate.side) not in Corpus_Callosum
+b08.side = endpoints_in(Sensorimotor.side) and endpoints_in(Putamen.side) not in hemisphere.opposite not in posterior_of(HC.side) not in anterior_of(Putamen.side) not in Corpus_Callosum
+b09.side = endpoints_in(Sensorimotor.side) and endpoints_in(Thalamus.side) not in hemisphere.opposite not in posterior_of(HC.side) not in anterior_of(Thalamus.side) not in Corpus_Callosum
+
+##############################
+# Globus Pallidus connections 
+##############################
+b10.side = endpoints_in(Pallidum.side) and endpoints_in(Caudate.side) not in hemisphere.opposite
+b11.side = endpoints_in(Pallidum.side) and endpoints_in(Putamen.side) not in hemisphere.opposite
+b12.side = endpoints_in(Pallidum.side) and endpoints_in(Thalamus.side) not in hemisphere.opposite
+
+#################################
+# Putamen - thalamus connections
+#################################
+b13.side = endpoints_in(Putamen.side) and endpoints_in(Thalamus.side) not in hemisphere.opposite
+
+
+####################################
+# Substancia Nigra (SN) connections 
+####################################
+# in case first option is empty
+b14.side = Brainstem_SN.side and Pallidum.side not in hemisphere.opposite not in Cerebellum_both
+b15.side = Brainstem_SN.side and Putamen.side not in hemisphere.opposite not in Cerebellum_both
+b16.side = Brainstem_SN.side and Thalamus.side not in hemisphere.opposite not in Cerebellum_both
+b17.side = Brainstem_SN.side and Basal_forebrain.side not in hemisphere.opposite not in Cerebellum_both
+
+####################################
+# Basal forebrain (BF) connections 
+####################################
+b18.side = Basal_forebrain.side and endpoints_in(Associative.side) not in hemisphere.opposite 
+b19.side = Basal_forebrain.side and endpoints_in(Limbic.side) not in hemisphere.opposite 
+b20.side = Basal_forebrain.side and endpoints_in(Sensorimotor.side) not in hemisphere.opposite 
+
+
+
+
